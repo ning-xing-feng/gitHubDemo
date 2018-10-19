@@ -16,15 +16,28 @@ router.post('/register',function(req,res){
     res.render('werror',{code: -1, msg:'用户名必须是5-10位' });
     return;
   } 
-
-
+  
   //操作数据库
-  usersModel.add(req.body,function(err){
+/*   usersModel.add(req.body,function(err){
     if(err) throw err;
     //注册成功，跳到登陆页面
     res.render('login');
-  });
+  }); */
   //res.send();
+  usersModel.add(req.body,function(err){
+    if(err){
+      //将错误信息渲染到页面
+      res.render('werror',err);
+    }else{
+      //注册成功，跳转到登陆
+      res.render('login');
+    }
+  })
+
+
+
+
+
 });
 
 module.exports = router;
