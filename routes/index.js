@@ -10,5 +10,9 @@ router.get('/', function(req, res, next) {
 router.get('/register',function(req,res){
     res.render('register');
 });
+/* router.get('/login', function(req, res) {
+  console.log('登录页面进来');
+  res.render('login');
+}) */
 
 module.exports = router;

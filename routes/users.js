@@ -6,7 +6,6 @@ const usersModel=require('../model/usersModel.js')
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-
 router.post('/register',function(req,res){
   console.log('获取传递过来的数据  post 请求的数据');
   console.log(req.body);
@@ -33,11 +32,6 @@ router.post('/register',function(req,res){
       res.render('login');
     }
   })
-
-
-
-
-
 });
 
 module.exports = router;
