@@ -6,6 +6,7 @@ const usersModel=require('../model/usersModel.js')
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+//注册
 router.post('/register',function(req,res){
   console.log('获取传递过来的数据  post 请求的数据');
   console.log(req.body);
@@ -34,4 +35,28 @@ router.post('/register',function(req,res){
   })
 });
 
+
+//d登陆
+router.post('/login',function(req,res){
+    //调用usermodule的loginfangfa
+    usersModel.login(req.body,function(err,data){
+      if(err){
+        res.render('werror',err);
+        }else{
+          //调转到首页
+          //将用户信息保存到cookie
+          res.cookie('username',data.username,{
+            maxAge:1000*60*60*24
+          })
+          res.cookie('nickname',data.nickname,{
+            maxAge:1000*60*60*24
+          })
+          res.cookie('isAdmin',data.isAdmin,{
+            maxAge:1000*60*60*24
+          })
+          res.redirect('/');
+          console.log('当前登陆用户的信息是',data);
+        }
+      });
+    });
 module.exports = router;

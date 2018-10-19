@@ -79,6 +79,42 @@ const usersModel = {
                 client.close();
             });
         });
+    },
+    /**
+     * 
+     * @param {Object} data 登陆信息
+     * @param {functionon} cb 
+     */
+    login(data, cb) {
+        MongoClient.connect(url, function (err, client) {
+            if (err) {
+                cb({ code: -100, msg: '数据库连接失败' });
+            } else {
+                //连接成功,去数据库查询
+                db.collection('user').find({
+                    username: data.username,
+                    password: data.password
+                }).toArray(function (err, data) {
+                    if (err) {
+                        console.log('数据库查询失败')
+                        cb({ code: -101, msg: '数据库查询失败' });
+                        client.close();
+                    } else if (data.length <= 0) {
+                        //没有找到，不能登陆
+                        console.log('用户不能登陆');
+                        cb({ code: -102, msg: '用户名或密码不存在' });
+                    } else {
+                        console.log('用户可以登陆');
+                        cb(null, {
+                            username: data[0].username,
+                            isAdmin: data[0].is_admin,
+                            nickname:data[0].nickname
+                        })
+                    }
+                    client.close();
+                })
+            }
+        });
     }
 }
 //将对象暴露
