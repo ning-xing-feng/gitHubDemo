@@ -15,8 +15,19 @@ router.post('/register',function(req,res){
   if(!/^\w{5,10}$/.test(req.body.username)){
     res.render('werror',{code: -1, msg:'用户名必须是5-10位' });
     return;
+  }
+  if(!/^\w{6,18}$/.test(req.body.password)){
+    res.render('werror',{code:-1,msg:'密码必须是0-9，a-z,A-Z的任意12个字符'});
+    return;
   } 
-  
+  if(req.body.password!==req.body.repassword){
+    res.render('werror',{code:-1,msg:'两次输入的密码不一致'});
+    return;
+  }  
+  if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(req.body.phone)){
+    res.render('werror',{code:-1,msg:'手机号格式不正确'});
+    return;
+  }
   //操作数据库
 /*   usersModel.add(req.body,function(err){
     if(err) throw err;
@@ -30,12 +41,10 @@ router.post('/register',function(req,res){
       res.render('werror',err);
     }else{
       //注册成功，跳转到登陆
-      res.render('login');
+      res.render('/login.html');
     }
   })
 });
-
-
 //d登陆
 router.post('/login',function(req,res){
     //调用usermodule的loginfangfa

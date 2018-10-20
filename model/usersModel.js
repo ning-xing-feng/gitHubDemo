@@ -28,7 +28,7 @@ const usersModel = {
             let saveData = {
                 username: data.username,
                 password: data.password,
-                phone: data.iphone,
+                phone: data.phone,
                 id_admin: data.isAdmin
             };
             console.log(saveData);
@@ -37,6 +37,7 @@ const usersModel = {
                 function (callback) {
                     //查询是否已注册
                     db.collection('users').find({ username: saveData.username }).count(function (err, num) {
+                        console.log(num);
                         if (err) {
                             callback({ code: -101, msg: '查询是否已注册失败' });
                         } else if (num !== 0) {
@@ -91,7 +92,8 @@ const usersModel = {
                 cb({ code: -100, msg: '数据库连接失败' });
             } else {
                 //连接成功,去数据库查询
-                db.collection('user').find({
+                const db=client.db('nxf');
+                db.collection('users').find({
                     username: data.username,
                     password: data.password
                 }).toArray(function (err, data) {

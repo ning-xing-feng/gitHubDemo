@@ -12,50 +12,68 @@
           background-size: 100%;
         }
         h1{
-            margin-top: 100px;
-            margin-bottom: 50px;
+            margin-top: 90px;
+            margin-bottom: 74px;
+            margin-left: 196px;
+        }
+        form{
+          margin-top: 60px;
+            width: 500px;
+            margin-left: 100px;
+           background: #ffffff; 
+            padding: 50px 0 200px 0;
+            box-shadow:1px 1px 5px #333 
+        }
+        button{
+            width: 180px;
+            margin-left: 156px;
+            margin-right: 50px;
+        }
+        p{
+            margin-top: 40px;
+        }
+        label
+        {
+            width: 150px;
+            height: 30px;
+            line-height: 30px;
+            text-align: right;
+            font-size: 14px;
+            display: inline-block;
+        }
+        input{
+          width: 300px;
+          height: 45px;
+        }
+        .btsp{
+          margin-top: 50px;
         }
     </style>
   <title>Document</title>
 </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <h1 class="col-md-5 col-md-offset-5">xx-后台管理系统</h1>
-      <div class="col-md-4 col-md-offset-4">
-          <form action="/users/login" method="POST">
-          <div class="form-group">
-            <label class="col-sm-4 control-label">用户名:</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control" placeholder="请输入用户名" name="username">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-4">
+                <h1>xx-后台管理系统</h1>
+                <form action="/users/login" method="POST">
+                    <p>
+                        <label>用户名：</label>
+                        <input type="text" id="userName" name="username" placeholder="请输入用户名">
+                    </p>
+                    <p>
+                        <label>登录密码：</label>
+                        <input type="password" id="passWord" name="password" placeholder="请输入密码">
+                    </p>
+                    <p class="btsp">
+                      <button type="submit" class="btn btn-info">登录</button>
+                      <a href="#">直接登录</a>
+                    </p>
+                </form>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-4 control-label">密码：</label>
-            <div class="col-sm-8">
-              <input type="password" class="form-control" placeholder="请输入密码" name="password">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Remember me
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-info">submit</button>
-              <a href="#">直接登录</a>
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
