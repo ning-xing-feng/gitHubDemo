@@ -92,7 +92,7 @@ const usersModel = {
                 cb({ code: -100, msg: '数据库连接失败' });
             } else {
                 //连接成功,去数据库查询
-                const db=client.db('nxf');
+                const db = client.db('nxf');
                 db.collection('users').find({
                     username: data.username,
                     password: data.password
@@ -110,7 +110,7 @@ const usersModel = {
                         cb(null, {
                             username: data[0].username,
                             isAdmin: data[0].is_admin,
-                            nickname:data[0].nickname
+                            nickname: data[0].nickname
                         })
                     }
                     client.close();

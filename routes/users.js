@@ -12,8 +12,8 @@ router.post('/register',function(req,res){
   console.log(req.body);
  // res.send();
   //用户名的验证
-  if(!/^\w{5,10}$/.test(req.body.username)){
-    res.render('werror',{code: -1, msg:'用户名必须是5-10位' });
+  if(!/^[A-Za-z][A-Za-z0-9]{3,11}$/.test(req.body.username)){
+    res.render('werror',{code: -1, msg:'用户名必须是3-11位' });
     return;
   }
   if(!/^\w{6,18}$/.test(req.body.password)){
@@ -41,7 +41,7 @@ router.post('/register',function(req,res){
       res.render('werror',err);
     }else{
       //注册成功，跳转到登陆
-      res.render('/login.html');
+      res.redirect('/login.html');
     }
   })
 });
