@@ -8,23 +8,20 @@
 .index .header{
     height: 60px;
     line-height: 60px;
-    border-bottom: 1px solid #000000;
 
 }
 .index .container{
     display: flex;
     flex: 1;
-    background: pink;
 }
 .container .menu{
     width: 260px;
     height: 100%;
-    background: skyblue;
+    background:#ccc;
 }
 .container .main{
     flex:1;
     height:  100%;
-    background: greenyellow;
 }
 /* 头部样式 */
 .header{
@@ -49,12 +46,28 @@
     border: none;
     box-shadow:1px 1px 5px #333;
     font-size: 14px;
+    background: skyblue;
+}
+.header .header_right button a{
+    text-decoration: none;
+    color: #ffffff;
 }
 .header .header_right .names{
     font-size: 14px;
     color: gray;
 }
 /* 菜单栏 */
-.container .menu menList li{
-    float: left;
+.container .menu .menuList{
+    margin-top: 20px;
+}
+.container .menu .menuList li a{
+    color: #000000;
+    text-decoration: none;
+}
+.container .menu .menuList li{
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    padding-left: 20px;
+    border-bottom: 1px solid #eeccee;
 }

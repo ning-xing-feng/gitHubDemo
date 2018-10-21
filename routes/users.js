@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
 //注册
 router.post('/register',function(req,res){
   console.log('获取传递过来的数据  post 请求的数据');
-  console.log(req.body);
  // res.send();
   //用户名的验证
   if(!/^[A-Za-z][A-Za-z0-9]{3,11}$/.test(req.body.username)){
@@ -68,4 +67,16 @@ router.post('/login',function(req,res){
         }
       });
     });
+
+  //推出登陆
+  router.get('/logout',function(req,res){
+    //清楚cookie，跳转页面
+    res.clearCookie('username');
+    res.clearCookie('nickname');
+    res.clearCookie('isAdmin');
+    res.redirect('/login.html');
+
+
+    res.send('<script>location.replace("/")</script>');
+  })
 module.exports = router;

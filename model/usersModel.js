@@ -28,10 +28,11 @@ const usersModel = {
             let saveData = {
                 username: data.username,
                 password: data.password,
+                nickname: data.nickname,
                 phone: data.phone,
-                id_admin: data.isAdmin
-            };
-            console.log(saveData);
+                is_admin: data.isAdmin
+              };
+            console.log(data.id_admin);
             //使用async的串行无关联
             async.series([
                 function (callback) {
@@ -109,8 +110,8 @@ const usersModel = {
                         console.log('用户可以登陆');
                         cb(null, {
                             username: data[0].username,
-                            isAdmin: data[0].is_admin,
-                            nickname: data[0].nickname
+                            nickname: data[0].nickname,
+                            isAdmin: data[0].is_admin
                         })
                     }
                     client.close();

@@ -8,16 +8,14 @@
   <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
+  
     <div class="index">
-      <%- include('./common/header.ejs') %>
+      <%- include('./common/header.ejs',{nickname:nickname,isAdmin:isAdmin}) %>
       <div class="container">
-        <div class="menu">
-          <ul class="menuList">
-            <li><a href="##">用户管理</a></li>
-            <li><a href="##">手机管理</a></li>
-          </ul>
+        <%- include('./common/menu.ejs',{isAdmin:isAdmin})%>
+        <div class="main">
+          <p style="font-size:30px;margin-left:30px;">Welcome to here <span style="color:aquamarine"><%= username %></span></p>
         </div>
-        <div class="main"></div>
       </div>
     </div>
 </body>
