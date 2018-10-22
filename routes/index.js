@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var usersModel = require('../model/usersModel.js');
+
+var usersModel=require('../model/usersModel.js');
 /* GET home page. */
 // 首页
 router.get('/', function(req, res, next) {
@@ -35,4 +37,46 @@ router.get('/login.html', function(req, res) {
   res.render('login');
 })
 
+//用户管理页面
+router.get('/user-manager.html',function(req,res){
+  //必须先判断用户是否是管理员
+  if(req.cookies.username && parseInt(req.cookies.isAdmin)){
+    //查询数据库
+    //从前端去得两个参数
+    let page=req.query.page||1;
+    let pageSize=req.query.pageSize||5;
+
+
+    usersModel.getUserList({
+      page:page,
+      pageSize:pageSize
+    },function(err,data){
+      if(err){
+        res.render('werror',err);
+      }else{
+        res.render('user-manager',{
+          username: req.cookies.username,
+          nickname: req.cookies.nickname,
+          isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',
+
+          userList:data.userList,//从数据库获得数据
+          totalPage:data.totalPage,
+          page:data.page
+      });
+    }
+  });
+  }else{
+    res.redirect('/login.html');
+  }
+})
+
+
+//手机管理页面
+router.get('/mobile-manager.html',function(req,res){
+  if(req.cookies.username && parseInt(req.cookies.isAdmin)){
+    res.render('mobile-manager');
+  }else{
+    res.redirect('/login.html');
+  }
+})
 module.exports = router;

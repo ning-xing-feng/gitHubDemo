@@ -68,7 +68,7 @@ router.post('/login',function(req,res){
       });
     });
 
-  //推出登陆
+  //退出登陆
   router.get('/logout',function(req,res){
     //清楚cookie，跳转页面
     res.clearCookie('username');
