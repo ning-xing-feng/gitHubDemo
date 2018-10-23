@@ -134,3 +134,48 @@ tbody a{
     background: skyblue;
     color: #fff;
 }
+
+/* y用户信息的修改 */
+.updataNews{
+    width: 500px;
+    position: absolute;
+    right: 300px;
+    bottom: 50px;
+    border: 1px solid #000000;
+    background: #fff;
+    height: 500px;
+    display: none;
+}
+.updataNews input{
+    height:30px;
+    width: 300px;
+    border: none;
+    border: 1px solid #333;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+.updataNews h2{
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    margin-top: 50px;
+}
+.updataNews p{
+    padding-left: 20px;
+}
+.updataNews .adbtn{
+    width: 100px;
+    margin-left: 80px;
+    background: skyblue;
+    color: #fff;
+    
+}
+.updataNews .btn{
+    width: 100px;
+    height: 30px;
+    background: skyblue;
+    color: #fff;
+    border: none;
+    outline: none;
+    border: 1px solid #000000;
+}

@@ -7,6 +7,8 @@
   <title>Document</title>
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/index.css">
+  <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/js/user-manager.js"></script>
 </head>
 <body>
 
@@ -19,12 +21,12 @@
       <%- include('./common/menu.ejs', { isAdmin: isAdmin }) %>
 
       <div class="main">
-        <div class="menuSerch">       
-           <input type="text" placeholder="输入用户昵称" class="nameSerch">
-          <button class="btn">搜索</button>
+        <div class="menuSerch"> 
+          <form action="/user-manager" method="GET">
+              <input type="text" placeholder="输入用户名" class="nameSerch" name="search">
+              <input type="submit" class="btn" value="搜索">
+          </form>
         </div>
-
-
         <table>
           <thead>
             <tr>
@@ -40,41 +42,102 @@
           </thead>
           <tbody>
             <!-- 循环显示用户数据 -->
-            <% for (var i=0;i<userList.length;i++){%>
-                <tr>
-                    <td><%- userList[i]._id %></td>
-                    <td><%- userList[i].username %></td>
-                    <td><%- userList[i].nickname %></td>
-                    <td><%- userList[i].phone %></td>
-                    <td><%- userList[i].sex || '-' %></td>
-                    <td><%- userList[i].age || '-' %></td>
-                    <td><%= parseInt(userList[i].is_admin) ? '是' : '否' %></td>
-                    <td>
-                      <% if(userList[i].username===username) {%>
-                        <a href="#">修改</a>
-                        <% } else if(parseInt(userList[i].isAdmin)) {%>
+            <% if(!userList.length) {%>
+              <tr>
+                  <td><%- userList._id %></td>
+                  <td><%- userList.username %></td>
+                  <td><%- userList.nickname %></td>
+                  <td><%- userList.phone %></td>
+                  <td><%- userList.sex || '-' %></td>
+                  <td><%- userList.age || '-' %></td>
+                  <td><%= parseInt(userList.is_admin) ? '是' : '否' %></td>
+                  <td>
+                    <% if(userList.username===username) {%>
+                      <a href="/users/update" class="uodataUserNews">修改</a>
+                      <% } else if(parseInt(userList.is_admin)) {%>
 
-                          <% } else {%>
-                            <a href="#">修改</a>
-                            <a href="#">删除</a>
-                            <% } %>
-                    </td>
-                   </tr>
-
-              <% } %>
+                        <% } else {%>
+                          <a href="/users/update" class="uodataUserNews">修改</a>
+                          <a href="/users/delete?id=<%= userList._id %>">删除</a>
+                          <% } %>
+                  </td>
+                 </tr>
+              <% } else {%>
+                <% for (var i=0;i<userList.length;i++){%>
+                    <tr>
+                        <td class="Id"><%- userList[i]._id %></td>
+                        <td class="username"><%- userList[i].username %></td>
+                        <td class="nickname"><%- userList[i].nickname %></td>
+                        <td class="phone"><%- userList[i].phone %></td>
+                        <td><%- userList[i].sex || '-' %></td>
+                        <td><%- userList[i].age || '-' %></td>
+                        <td><%= parseInt(userList[i].is_admin) ? '是' : '否' %></td>
+                        <td>
+                          <% if(userList[i].username===username) {%>
+                            <a href="/users/update" class="uodataUserNews">修改</a>
+                            <% } else if(parseInt(userList[i].is_admin)) {%>
+                              <% } else {%>
+                                <a href="/users/update" class="uodataUserNews">修改</a>
+                                <a href="/users/delete?id=<%= userList[i]._id %>">删除</a>
+                                <% } %>
+                        </td>
+                       </tr>
+                <% } %>
+              <% } %> 
           </tbody>
          </table>
-
          <!-- 实现分页 -->
          <ul class="paging">
-           <% for (var i=0; i< totalPage;i++) { %>
-            <li>
-              <a href="/user-manager.html?page=<%= i+1 %>" class="active" ><%= i+1%>页</a>
-            </li>
-            <% } %>
+          <% if(totalPage==''){ %>
+              <a href="/user-manager" class="active" style="color:#000;text-decoration:none;" >查看全部</a>
+            <% }else{ %>
+              <% for (var i=0; i< totalPage;i++) { %>
+               <li>
+                 <a href="/user-manager?page=<%= i+1 %>" class="active" ><%= i+1%>页</a>
+               </li>
+               <% } %>
+              <% } %>
          </ul>
+         <!-- 实现用户信息的修改 -->
+         <form action="/users/update" method="GET" class="updataNews">
+         <h2>用户信息修改</h2>
+         <p style="display:none;">
+            <label>Id名：</label>
+            <input type="text" class="newId" name="newId">
+          </p>
+          <p>
+              <label>用户名：</label>
+              <input type="text" class="newUsername" name="newUsername" >
+          </p>
+          <p>
+              <label>昵称&nbsp;&nbsp;&nbsp;： </label>
+              <input type="text" class="newNickname" name="newNickname">
+          </p>
+          <p>
+              <label>手机号：</label>
+              <input type="text" class="newPhone" name="newPhone">
+          </p>
+          <p class="btsp">
+            <input type="submit" value="确认修改" class="adbtn">
+            <button class="btn">取消</button>
+          </p>
+      </form>
         </div>
       </div>
     </div>
+    
 </body>
 </html>
+<script>
+  $('.uodataUserNews').click(function(){
+    console.log($(this).parent().parent().find('.username').html());
+    $('.updataNews').children().find('.newId').val($(this).parent().parent().find('.Id').html());
+    $('.updataNews').children().find('.newUsername').val($(this).parent().parent().find('.username').html());
+    $('.updataNews').children().find('.newPhone').val($(this).parent().parent().find('.phone').html());
+    $('.updataNews').children().find('.newNickname').val($(this).parent().parent().find('.nickname').html());
+    $('.updataNews').show();
+})
+  $('.btn').click(function(){
+    $('.updataNews').hide();
+  })
+</script>

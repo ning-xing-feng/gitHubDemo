@@ -27,13 +27,6 @@ router.post('/register',function(req,res){
     res.render('werror',{code:-1,msg:'手机号格式不正确'});
     return;
   }
-  //操作数据库
-/*   usersModel.add(req.body,function(err){
-    if(err) throw err;
-    //注册成功，跳到登陆页面
-    res.render('login');
-  }); */
-  //res.send();
   usersModel.add(req.body,function(err){
     if(err){
       //将错误信息渲染到页面
@@ -46,7 +39,7 @@ router.post('/register',function(req,res){
 });
 //d登陆
 router.post('/login',function(req,res){
-    //调用usermodule的loginfangfa
+    //调用usermodule的login方法
     usersModel.login(req.body,function(err,data){
       if(err){
         res.render('werror',err);
@@ -68,6 +61,36 @@ router.post('/login',function(req,res){
       });
     });
 
+  //删除用户数据
+  router.get('/delete',function(req,res){
+    //调用usersModel中的delete方法
+    var userId=req.query.id;
+    console.log(req.query.id);
+    usersModel.deleteUsers(userId,function(err,data){
+      if(err){
+        res.render('werror',err);
+      }else{
+        //删除成功
+        res.redirect('/user-manager');
+      }
+    })
+  })
+
+  //修改用户数据
+  router.get('/update',function(req,res){
+    //调用userModel中的updata方法
+    console.log('要修改的数据'+req.query.newNickname);
+    usersModel.update(req.query,function(err,data){
+      if(err){
+        res.render('werror',err);
+      }else{
+        console.log('修改成功');
+        res.redirect('/user-manager');
+      }
+    })
+  
+  })
+
   //退出登陆
   router.get('/logout',function(req,res){
     //清楚cookie，跳转页面
@@ -75,8 +98,6 @@ router.post('/login',function(req,res){
     res.clearCookie('nickname');
     res.clearCookie('isAdmin');
     res.redirect('/login.html');
-
-
     res.send('<script>location.replace("/")</script>');
   })
 module.exports = router;

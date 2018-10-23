@@ -16,9 +16,6 @@ router.get('/', function(req, res, next) {
       nickname: req.cookies.nickname,
       isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : ''
     });
-    console.log( req.cookies.username);
-    console.log( req.cookies.nickname);
-    console.log( req.cookies.isAdmin);
   } else {
     // 跳转到登陆页面
     res.redirect('/login.html');
@@ -36,40 +33,64 @@ router.get('/login.html', function(req, res) {
   console.log('登录页面进来');
   res.render('login');
 })
-
 //用户管理页面
-router.get('/user-manager.html',function(req,res){
+router.get('/user-manager',function(req,res){
   //必须先判断用户是否是管理员
   if(req.cookies.username && parseInt(req.cookies.isAdmin)){
     //查询数据库
     //从前端去得两个参数
     let page=req.query.page||1;
     let pageSize=req.query.pageSize||5;
-
-
-    usersModel.getUserList({
-      page:page,
-      pageSize:pageSize
-    },function(err,data){
-      if(err){
-        res.render('werror',err);
-      }else{
-        res.render('user-manager',{
-          username: req.cookies.username,
-          nickname: req.cookies.nickname,
-          isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',
-
-          userList:data.userList,//从数据库获得数据
-          totalPage:data.totalPage,
-          page:data.page
-      });
+    let search = req.query.search;
+    let userId = req.query.id;
+    if(req.query.search){
+    console.log( req.query.search);
+      usersModel.findUsername({
+        search: req.query.search
+      },function(err,data){
+        if(err){
+          res.render('werror',err);
+        }else{
+          console.log(data);
+          res.render('user-manager',{
+            username: req.cookies.username,
+            nickname: req.cookies.nickname,
+            isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',
+            userList:data.userList,
+            totalPage:data.totalPage || '',
+            page:data.page
+        });
+      }
+      })
+    }else{
+      usersModel.getUserList({
+        page:page,
+        pageSize:pageSize,
+        search: search
+      },function(err,data){
+        if(err){
+          res.render('werror',err);
+        }else{
+          res.render('user-manager',{
+            username: req.cookies.username,
+            nickname: req.cookies.nickname,
+            isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',
+  
+            userList:data.userList,
+            totalPage:data.totalPage,
+            page:data.page
+        });
+      }
+    });
     }
-  });
   }else{
     res.redirect('/login.html');
   }
 })
-
+/* //用户删除
+router.get('/user-manager',function(req,res){
+  res.send('这里的id是'+req.query);
+}) */
 
 //手机管理页面
 router.get('/mobile-manager.html',function(req,res){
