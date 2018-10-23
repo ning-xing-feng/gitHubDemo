@@ -53,11 +53,11 @@
                   <td><%= parseInt(userList.is_admin) ? '是' : '否' %></td>
                   <td>
                     <% if(userList.username===username) {%>
-                      <a href="/users/update" class="uodataUserNews">修改</a>
+                      <a href="javascript:;" class="uodataUserNews">修改</a>
                       <% } else if(parseInt(userList.is_admin)) {%>
 
                         <% } else {%>
-                          <a href="/users/update" class="uodataUserNews">修改</a>
+                          <a href="javascript:;" class="uodataUserNews">修改</a>
                           <a href="/users/delete?id=<%= userList._id %>">删除</a>
                           <% } %>
                   </td>
@@ -74,10 +74,10 @@
                         <td><%= parseInt(userList[i].is_admin) ? '是' : '否' %></td>
                         <td>
                           <% if(userList[i].username===username) {%>
-                            <a href="/users/update" class="uodataUserNews">修改</a>
+                            <a href="javascript:;" class="uodataUserNews">修改</a>
                             <% } else if(parseInt(userList[i].is_admin)) {%>
                               <% } else {%>
-                                <a href="/users/update" class="uodataUserNews">修改</a>
+                                <a href="javascript:;" class="uodataUserNews">修改</a>
                                 <a href="/users/delete?id=<%= userList[i]._id %>">删除</a>
                                 <% } %>
                         </td>

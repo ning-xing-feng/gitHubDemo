@@ -75,7 +75,7 @@
     position: relative;
 }
 table{
-    width: 900px;
+    width: 950px;
     margin: 0 auto;
 }
 th,td{
@@ -178,4 +178,20 @@ tbody a{
     border: none;
     outline: none;
     border: 1px solid #000000;
+
+    
+}
+/* 新增手机 */
+ .addPhone{
+    width: 100px;
+    height: 40px;
+    border: 1px solid #eee;
+    float: left;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    line-height: 40px;
+    text-align: center;
+    margin-left: 40px;
+    cursor: pointer;
 }

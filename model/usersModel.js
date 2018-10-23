@@ -52,11 +52,11 @@ const usersModel = {
                 },
                 function (callback) {
                     //查询所有记录条数
-                    db.collection('users').find().count(function (err, num) {
+                    db.collection('users').find().toArray(function (err, data) {
                         if (err) {
                             callback({ code: -101, msg: '查询表的所有记录条数' });
                         } else {
-                            saveData._id = num + 1;
+                            saveData._id = data[data.length - 1]._id + 1;
                             callback(null);
                         }
                     });
@@ -230,9 +230,6 @@ const usersModel = {
             }
         })
     },
-
-
-
     //修改用户信息
     update(data, cb) {
         MongoClient.connect(url, function (err, client) {
@@ -241,27 +238,26 @@ const usersModel = {
             } else {
                 var db = client.db('nxf');
                 var userId = parseInt(data.newId);
-                console.log('修改'+data.newUsername)
+                console.log('修改' + data.newUsername)
                 console.log('这里的数据是要做修改操作的');
-                db.collection('users').updateOne({
-                    _id: userId
-                }, {
-                        $set: {
-                            username: data.newUsername,
-                            nickname: data.newNickname,
-                            phone: data.newPhone
-                        }, function(err) {
-                            if (err) {
-                                cb({ code: -104, msg: '修改信息错误' });
-                            } else {
-                                cb(null);
-                            }
-                        }
+
+
+                db.collection('users').updateOne({ _id: userId }, {
+                    $set: {
+                        username: data.newUsername,
+                        nickname: data.newNickname,
+                        phone: data.newPhone
                     }
-                    )
-                }
-            });
-        }
+                }, function (err) {
+                    if (err) {
+                        cb({ code: -104, msg: '修改信息错误' });
+                    } else {
+                        cb(null);
+                    }
+                })
+            }
+        });
     }
+}
 //将对象暴露
 module.exports = usersModel;
