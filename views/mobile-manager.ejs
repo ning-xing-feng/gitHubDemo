@@ -41,15 +41,15 @@
           <tbody>
                 <% for (var i=0;i<phoneList.length;i++){%>
                   </tr>
-                        <td class="Id"><%-phoneList[i]._id %></td>
+                        <td class="phoneId"><%-phoneList[i]._id %></td>
                         <td class="username"><img src="/mobiles/<%- phoneList[i].src%>"</td>
-                        <td class="nickname"><%- phoneList[i].phonename %></td>
-                        <td class="nickname"><%- phoneList[i].branchType %></td>
-                        <td class="nickname"><%- phoneList[i].newPrice %></td>
-                        <td><%- phoneList[i].newTwoprice%></td>
+                        <td class="phonename"><%- phoneList[i].phonename %></td>
+                        <td class="branchTypes"><%- phoneList[i].branchType %></td>
+                                   <td class="newPrice"><%- phoneList[i].newPrice %></td>
+                        <td class="newTwoprice"><%- phoneList[i].newTwoprice%></td>
                         <td>
-                          <a href="##">修改</a>
-                          <a href="##">删除</a>
+                          <a href="javascript:;" class="trupdate">修改</a>
+                          <a href="phone/delete?id=<%= phoneList[i]._id%>">删除</a>
                         </td>
                       </tr>
                 <% } %>
@@ -68,9 +68,10 @@
                  <% } %>
                 <% } %>
            </ul>
-           <!-- 实现用户信息的修改 -->
+           <!-- 实现手机信息的修改 -->
          <form action="/phone/Insert" method="POST" enctype="multipart/form-data" class="updataNews" >
           <h2>新增手机</h2>
+
            <p>
                <label>名称：</label>
                <input type="text" class="newUsername" name="phonename" >
@@ -96,10 +97,49 @@
               <input type="file" class="imgSrc" name="src">
           </p>
            <p class="btsp">
-             <button class="adbtn">确认修改</button>
+             <button class="adbtn">确认添加</button>
              <button class="btn">取消</button>
            </p>
        </form>
+
+
+
+
+       <form action="/phone/update" method="POST" enctype="multipart/form-data" class="pdatePhone" >
+        <h2>修改手机信息</h2>
+       <p style="display:none;">
+          <label>ID：</label>
+          <input type="text" class="phoneId" name="phoneId" >
+      </p>
+         <p>
+             <label>名称：</label>
+             <input type="text" class="phonename" name="phonename" >
+         </p>
+         <p>
+             <label>品牌：&nbsp;&nbsp;&nbsp;： </label>
+             <select name="branchType" id="" class="branchType">
+               <option>苹果</option>
+               <option>小米</option>
+               <option>魅族</option>
+             </select>
+         </p>
+         <p>
+             <label>官方指导价：</label>
+             <input type="text" class="newPhone" name="newPrice">
+         </p>
+         <p>
+            <label>二手回收价：</label>
+            <input type="text" class="priceE" name="newTwoprice">
+        </p>
+        <p>
+            <label>图片</label>
+            <input type="file" class="imgSrc" name="src">
+        </p>
+         <p class="btsp">
+           <button class="adbtn">确认添加</button>
+           <button class="btn">取消</button>
+         </p>
+     </form>
         </div>
       </div>
     </div>
@@ -112,5 +152,20 @@
   })
     $('.btn').click(function(){
       $('.updataNews').hide();
+      $('.pdatePhone').hide();
     })
+$('.trupdate').click(function(){
+ // console.log(1)
+  console.log($(this).parent().parent().find('.Id').html());
+    $('.pdatePhone').children().find('.phoneId').val($(this).parent().parent().find('.phoneId').html());
+    $('.pdatePhone').children().find('.phonename').val($(this).parent().parent().find('.phonename').html());
+    $('.pdatePhone').children().find('.branchTypes').val($(this).parent().parent().find('.branchType').html());
+    $('.pdatePhone').children().find('.newPhone').val($(this).parent().parent().find('.newPrice').html());
+    $('.pdatePhone').children().find('.priceE').val($(this).parent().parent().find('.newTwoprice').html());
+  $('.pdatePhone').show();
+})
+
+
+
+
   </script>

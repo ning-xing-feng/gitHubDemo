@@ -87,10 +87,6 @@ add(data, cb) {
         });
     });
 },
-
-
-
-
     //获取手机列表信息
   getPhoneList(data, cb){
 
@@ -175,9 +171,57 @@ add(data, cb) {
           })
         }
       })
-  } 
-
-
+  },
+  //删除
+  deletePhone(data,cb){
+      MongoClient.connect(url,function(err,client){
+          if(err){
+              cb({code:-100,msg:'数据库连接失败'});
+          }else{
+              var db=client.db('nxf');
+              var phoneId=parseInt(data);
+              console.log('有毒的'+data);
+              db.collection('phone').remove({_id:phoneId},function(err){
+                  if(err){
+                      cb({code:-103,msg:'删除数据库失败'});
+                  }else{
+                      cb(null);
+                  }
+              })
+          }
+      })
+  },
+//修改手机信息
+ update(data,cb){
+     console.log(data);
+     MongoClient.connect(url,function(err,client){
+         if(err){
+            cb({code:-100,msg:'数据库连接失败'});
+         }else{
+             var db=client.db('nxf');
+             var phoneId=parseInt(data.phoneId);
+            // var imgSrc='/mobiles/data.src';
+            console.log('这里的手机数据要做修改'+phoneId);
+            console.log(data.fileName)
+            var src=data.fileName;
+            db.collection('phone').updateOne({_id:phoneId}, {
+                $set: {
+                    phonename:data.phonename,
+                    branchType:data.branchType,
+                    newPrice:data.newPrice,
+                    newTwoprice:data.newTwoprice,
+                    fileName:data.fileName
+                }
+            },function(err){
+                if(err){
+                    cb({code:-104,msg:'修改信息错误'});
+                }else{
+                    cb(null);
+                }
+            })
+         }
+     })
+ }
 }
   //获取用户列表
  module.exports = phoneModel;
