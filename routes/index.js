@@ -95,24 +95,24 @@ router.get('/mobile-manager',function(req,res){
     //查询数据库
     //从前端去得两个参数
     let page=req.query.page||1;
-    let pageSize=req.query.pageSize||5;
+    let pageSize=req.query.pageSize||2;
     let search = req.query.search;
     let userId = req.query.id;
   
-      phoneModel.getUserList({
+      phoneModel.getPhoneList({
         page:page,
         pageSize:pageSize,
         search: search
       },function(err,data){
         if(err){
-          res.render('werror',err);
+          res.render('werror',err); 
         }else{
           res.render('mobile-manager',{
             username: req.cookies.username,
             nickname: req.cookies.nickname,
             isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',
   
-            userList:data.userList,
+            phoneList:data.phoneList,
             totalPage:data.totalPage,
             page:data.page
         });

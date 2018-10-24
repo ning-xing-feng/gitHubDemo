@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const usersModel=require('../model/usersModel.js')
+const usersModel=require('../model/usersModel.js');
+const phoneModel=require('../model/phoneModel.js');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -76,7 +77,7 @@ router.post('/login',function(req,res){
     })
   })
 
-  //修改用户数据
+  //修改用  户数据
   router.get('/update',function(req,res){
     //调用userModel中的updata方法
     console.log('要修改的数据'+req.query.newNickname);

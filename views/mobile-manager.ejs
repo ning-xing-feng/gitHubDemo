@@ -26,7 +26,6 @@
       <div class="main">
          
         <div class="addPhone">新增手机</div>
-            
         <table>
           <thead>
             <tr>
@@ -39,16 +38,79 @@
               <th>操作</th>
             </tr>
           </thead>
-          </table>
-
-
-          <!-- s新增手机信息 -->
-
-
+          <tbody>
+                <% for (var i=0;i<phoneList.length;i++){%>
+                  </tr>
+                        <td class="Id"><%-phoneList[i]._id %></td>
+                        <td class="username"><img src="/mobiles/<%- phoneList[i].src%>"</td>
+                        <td class="nickname"><%- phoneList[i].phonename %></td>
+                        <td class="nickname"><%- phoneList[i].branchType %></td>
+                        <td class="nickname"><%- phoneList[i].newPrice %></td>
+                        <td><%- phoneList[i].newTwoprice%></td>
+                        <td>
+                          <a href="##">修改</a>
+                          <a href="##">删除</a>
+                        </td>
+                      </tr>
+                <% } %>
+           
+          </tbody>
+        </table>
+        <!-- 实现分页 -->
+        <ul class="paging">
+            <% if(totalPage==''){ %>
+                <a href="/mobile-manager" class="active" style="color:#000;text-decoration:none;" >查看全部</a>
+              <% }else{ %>
+                <% for (var i=0; i< totalPage;i++) { %>
+                 <li>
+                   <a href="/mobile-manager?page=<%= i+1 %>" class="active" ><%= i+1%>页</a>
+                 </li>
+                 <% } %>
+                <% } %>
+           </ul>
+           <!-- 实现用户信息的修改 -->
+         <form action="/phone/Insert" method="POST" enctype="multipart/form-data" class="updataNews" >
+          <h2>新增手机</h2>
+           <p>
+               <label>名称：</label>
+               <input type="text" class="newUsername" name="phonename" >
+           </p>
+           <p>
+               <label>品牌：&nbsp;&nbsp;&nbsp;： </label>
+               <select name="branchType" id="" class="branchType">
+                 <option>苹果</option>
+                 <option>小米</option>
+                 <option>魅族</option>
+               </select>
+           </p>
+           <p>
+               <label>官方指导价：</label>
+               <input type="text" class="newPhone" name="newPrice">
+           </p>
+           <p>
+              <label>二手回收价：</label>
+              <input type="text" class="priceE" name="newTwoprice">
+          </p>
+          <p>
+              <label>图片</label>
+              <input type="file" class="imgSrc" name="src">
+          </p>
+           <p class="btsp">
+             <button class="adbtn">确认修改</button>
+             <button class="btn">取消</button>
+           </p>
+       </form>
         </div>
       </div>
     </div>
 </body>
 </html>
 <script>
-</script>
+    $('.addPhone').click(function(){
+      // console.log(2);
+      $('.updataNews').show();
+  })
+    $('.btn').click(function(){
+      $('.updataNews').hide();
+    })
+  </script>

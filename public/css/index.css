@@ -195,3 +195,14 @@ tbody a{
     margin-left: 40px;
     cursor: pointer;
 }
+.username img{
+ width: 100px;
+}
+.branchType{
+    height:30px;
+    width: 300px;
+    border: none;
+    border: 1px solid #333;
+    margin-top: 30px;
+    margin-right: 20px;
+}
