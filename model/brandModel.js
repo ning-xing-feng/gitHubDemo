@@ -5,7 +5,8 @@ const async = require('async');
 
 // const  async = require('async');
 
-const brandModel={
+const brandModel = {
+    //添加到列表
     add(data, cb) {
         MongoClient.connect(url, function (err, client) {
             if (err) {
@@ -14,31 +15,28 @@ const brandModel={
                 return;
             };
             const db = client.db('nxf');
-    
-/*             let saveData = {
-                phonename: data.phonename,
-                branchType: data.branchType,
-                newPrice: data.newPrice,
-                newTwoprice: data.newTwoprice,
+
+            let saveData = {
+                brandName: data.brandName,
                 src: data.fileName
-            }; */
+            };
             //使用async的串行无关联
             async.series([
-    /*             function (callback) {
-                    //查询是否已注册
-                    db.collection('users').find({ username: saveData.username }).count(function (err, num) {
-                        console.log(num);
-                        if (err) {
-                            callback({ code: -101, msg: '查询是否已注册失败' });
-                        } else if (num !== 0) {
-                            console.log('用户已经存在');
-                            callback({ code: -102, msg: '用户已存在' });
-                        } else {
-                            console.log('当前用户可以注册');
-                            callback(null);
-                        }
-                    });
-                }, */
+                /*             function (callback) {
+                                //查询是否已注册
+                                db.collection('users').find({ username: saveData.username }).count(function (err, num) {
+                                    console.log(num);
+                                    if (err) {
+                                        callback({ code: -101, msg: '查询是否已注册失败' });
+                                    } else if (num !== 0) {
+                                        console.log('用户已经存在');
+                                        callback({ code: -102, msg: '用户已存在' });
+                                    } else {
+                                        console.log('当前用户可以注册');
+                                        callback(null);
+                                    }
+                                });
+                            }, */
                 function (callback) {
                     db.collection('brand').find().sort({ _id: -1 }).toArray(function (err, result) {
                         if (err) {
@@ -57,7 +55,7 @@ const brandModel={
                         }
                     });
                 },
-    
+
                 function (callback) {
                     //注册写入数据库的操作
                     db.collection('brand').insertOne(saveData, function (err) {
@@ -81,15 +79,14 @@ const brandModel={
             });
         });
     },
-        //获取手机列表信息
-        getBrandList(data, cb){
-    
+    //获取品牌列表信息
+    getBrandList(data, cb) {
+
         let saveData = {
-            phonename: data.phonename,
-            branchType: data.branchType,
-            newPrice: data.newPrice,
-        }; 
-              //链接数据库
+            brandName: data.brandName,
+            src: data.fileName
+        };
+        //链接数据库
         MongoClient.connect(url, function (err, client) {
             if (err) {
                 cb({ code: -100, msg: '连接数数据失败' });
@@ -134,10 +131,55 @@ const brandModel={
                     //关闭连接
                     client.close();
                 })
-    
+
             }
         })
-      },
+    },
+    //删除品牌
+    delete(data, cb) {
+        MongoClient.connect(url, function (err, client) {
+            if (err) {
+                cb({ code: -100, msg: '数据库链接失败' });
+            } else {
+                var db = client.db('nxf');
+                var brandId = parseInt(data);
+                console.log('这边是请求过来的要删除' + brandId);
+                db.collection('brand').remove({ _id: brandId }, function (err) {
+                    if (err) {
+                        cb({ code: -103, msg: '数据库删除失败' });
+                    } else {
+                        cb(null);
+                    }
+                })
+            }
+        })
+    },
+
+    //修改品牌
+    update(data, cb) {
+        MongoClient.connect(url, function (err, client) {
+            if (err) {
+                cb({ code: -100, msg: '数据库链接失败' });
+            } else {
+                var db = client.db('nxf');
+                var brandId = parseInt(data.brandId);
+                console.log('这是的品牌信息要做修改' + brandId);
+                console.log(data.fileName)
+                db.collection('brand').updateOne({ _id: brandId }, {
+                    $set: {
+                        brandName: data.brandName,
+                        src: data.fileName
+                    }
+                }, function (err) {
+                    if (err) {
+                        cb({ code: -104, msg: '修改品牌信息错误' });
+                    } else {
+                        cb(null);
+                    }
+                })
+            }
+        })
+    }
 }
 
 module.exports = brandModel;

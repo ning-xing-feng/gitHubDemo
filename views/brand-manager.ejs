@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,113 +11,127 @@
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/js/user-manager.js"></script>
 </head>
+
 <body>
-    <div class="index">
-        <%- include('./common/header.ejs', { nickname: nickname, isAdmin: isAdmin }) %>
-        <div class="container">
-            <div class="menu">
-                <ul class="menuList">
-                    <% if(isAdmin){%>
-                    <li><a href="/user-manager" >用户管理</a></li>
-                    <% }%>
-                    <li><a href="/mobile-manager"" > 手机管理</a></li>
-                    <li><a href="/brand-manager"  style="color:skyblue">品牌管理</a></li>
-                </ul>
-            </div>
-          <div class="main">
-             
-            <div class="addPhone addbrand">新增品牌</div>
-            <table>
-              <thead>
-                <tr>
-                  <th>序号</th>
-                  <th>品牌LOGO</th>
-                  <th>品牌名称</th>
-                  <th>二手回收价</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-            </table>
-            <ul class="paging">
-                <% if(totalPage==''){ %>
-                    <a href="/mobile-manager" class="active" style="color:#000;text-decoration:none;" >查看全部</a>
-                  <% }else{ %>
-                    <% for (var i=0; i< totalPage;i++) { %>
-                     <li>
-                       <a href="/mobile-manager?page=<%= i+1 %>" class="active" ><%= i+1%>页</a>
-                     </li>
-                     <% } %>
-                    <% } %>
-               </ul>
-               <!-- 实现手机信息的修改 -->
-             <form action="##" method="POST" enctype="multipart/form-data" class="insertBrand" >
-              <h2>新增手机</h2>
-               <p>
-                   <label>品牌LOGO</label>
-                   <input type="file" class="imgSrc" name="src">
-               </p>
+  <div class="index">
+    <%- include('./common/header.ejs', { nickname: nickname, isAdmin: isAdmin }) %>
+    <div class="container">
+      <div class="menu">
+        <ul class="menuList">
+          <% if(isAdmin){%>
+          <li><a href="/user-manager">用户管理</a></li>
+          <% }%>
+          <li><a href="/mobile-manager"" > 手机管理</a></li>
+                    <li><a href="/brand-manager" style="color:skyblue">品牌管理</a></li>
+        </ul>
+      </div>
+      <div class="main">
 
-               <p>
-                   <label>品牌名称：</label>
-                   <input type="text" class="brandName" name="brandName">
-               </p>
-               <p>
-               <p class="btsp">
-                 <button class="adbtn">确认添加</button>
-                 <button class="btn">取消</button>
-               </p>
-           </form>
+        <div class="addPhone addbrand">新增品牌</div>
+        <table>
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>品牌LOGO</th>
+              <th>品牌名称</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (var i=0;i<brandList.length;i++) {%>
+            <tr>
+              <td class="brandId">
+                <%- brandList[i]._id%>
+              </td>
+              <td class="imgSrc"><img src="/mobiles/<%- brandList[i].src%>" </td> <td class="brandName">
+                <%- brandList[i].brandName%>
+              </td>
+              <td>
+                <a href="javascript:;" class="trupdate">修改</a>
+                <a href="/brand/delete?id=<%= brandList[i]._id%>">删除</a>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <ul class="paging">
+          <% if(totalPage==''){ %>
+          <a href="/brand-manager" class="active" style="color:#000;text-decoration:none;">查看全部</a>
+          <% }else{ %>
+          <% for (var i=0; i< totalPage;i++) { %>
+          <li>
+            <a href="/brand-manager?page=<%= i+1 %>" class="active">
+              <%= i+1%>页</a>
+          </li>
+          <% } %>
+          <% } %>
+        </ul>
 
-
-
-
-
-           <form action="/phone/update" method="POST" enctype="multipart/form-data" class="pdatePhone" >
-            <h2>修改手机信息</h2>
-           <p style="display:none;">
-              <label>ID：</label>
-              <input type="text" class="phoneId" name="phoneId" >
+        <!-- 新增手机品牌 -->
+        <form action="/brand/Insert" method="POST" enctype="multipart/form-data" class="insertBrand">
+          <h2>新增品牌</h2>
+          <p>
+            <label>品牌LOGO</label>
+            <input type="file" class="imgSrc" name="src">
           </p>
-             <p>
-                 <label>名称：</label>
-                 <input type="text" class="phonename" name="phonename" >
-             </p>
-             <p>
-                 <label>品牌：&nbsp;&nbsp;&nbsp;： </label>
-                 <select name="branchType" id="" class="branchType">
-                   <option>苹果</option>
-                   <option>小米</option>
-                   <option>魅族</option>
-                 </select>
-             </p>
-             <p>
-                 <label>官方指导价：</label>
-                 <input type="text" class="newPhone" name="newPrice">
-             </p>
-             <p>
-                <label>二手回收价：</label>
-                <input type="text" class="priceE" name="newTwoprice">
+
+          <p>
+            <label>品牌名称：</label>
+            <input type="text" class="brandName" name="brandName">
+          </p>
+          <p>
+            <p class="btsp">
+              <button class="adbtn">确认添加</button>
+              <button class="btn">取消</button>
             </p>
-            <p>
-                <label>图片</label>
-                <input type="file" class="imgSrc" name="src">
-            </p>
-             <p class="btsp">
-               <button class="adbtn">确认添加</button>
-               <button class="btn">取消</button>
-             </p>
-         </form>
-            </div>
-          </div>
-        </div>
-    
+        </form>
+
+
+
+
+        <!-- 修改手机品牌信息 -->
+        <form action="/brand/update" method="POST" enctype="multipart/form-data" class="pdatePhone">
+          <h2>修改手机信息</h2>
+          <p style="display:none">
+            <label>ID</label>
+            <input type="text" class="brandId" name="brandId">
+          </p>
+          <p>
+            <label>品牌LOGO</label>
+            <input type="file" class="imgSrc" name="src">
+          </p>
+          <p>
+            <label>品牌名称：</label>
+            <input type="text" class="brandName" name="brandName">
+          </p>
+          <p class="btsp">
+            <button class="adbtn">确认修改</button>
+            <button class="btn">取消</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
 <script>
-    $('.addbrand').click(function(){
-      $('.insertBrand').show();
-    })
-    $('.btn').click(function(){
-      $('.insertBrand').hide();
-    })
+  $('.addbrand').click(function () {
+    $('.insertBrand').show();
+  })
+  $('.btn').click(function () {
+    $('.insertBrand').hide();
+    $('.pdatePhone').hide();
+  })
+  $('.trupdate').click(function () {
+    $('.pdatePhone').show();
+    console.log($(this).parent().parent().find('.brandId').html());
+
+    $('.pdatePhone').children().find('.brandId').val($(this).parent().parent().find('.brandId').html());
+    $('.pdatePhone').children().find('.brandName').val($(this).parent().parent().find('.brandName').html());
+
+  })
+
+
+
 </script>

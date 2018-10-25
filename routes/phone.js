@@ -70,7 +70,7 @@ router.get('/delete',function(req,res){
 //修改手机信息
 router.post('/update',upload.single('src'),function(req,res){
  console.log(req.body);
-  if(req.fileName!==undefined){
+  if(req.fileName!=='undefined'){
     fs.readFile(req.file.path,function(err,data){
       if(err){
         console.log('读取文件失败');

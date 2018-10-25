@@ -210,7 +210,7 @@ add(data, cb) {
                     branchType:data.branchType,
                     newPrice:data.newPrice,
                     newTwoprice:data.newTwoprice,
-                    fileName:data.fileName
+                    src:data.fileName
                 }
             },function(err){
                 if(err){
