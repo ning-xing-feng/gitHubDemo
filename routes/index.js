@@ -3,6 +3,7 @@ var router = express.Router();
 var usersModel = require('../model/usersModel.js');
 var phoneModel=require('../model/phoneModel.js');
 var usersModel=require('../model/usersModel.js');
+var brandModel = require('../model/brandModel.js');
 /* GET home page. */
 // 首页
 router.get('/', function(req, res, next) {
@@ -122,4 +123,40 @@ router.get('/mobile-manager',function(req,res){
     res.redirect('/login.html');
   }
 })
+
+
+router.get('/brand-manager',function(req,res){
+  if(req.cookies.username && parseInt(req.cookies.isAdmin)){
+    //查询数据库
+    //从前端去得两个参数
+    let page=req.query.page||1;
+    let pageSize=req.query.pageSize||2;
+    let search = req.query.search;
+    let userId = req.query.id;
+  
+      brandModel.getBrandList({
+        page:page,
+        pageSize:pageSize,
+        search: search
+      },function(err,data){
+        if(err){
+          res.render('werror',err); 
+        }else{
+          res.render('brand-manager',{
+            username: req.cookies.username,
+            nickname: req.cookies.nickname,
+            isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',
+  
+            brandList:data.brandList,
+            totalPage:data.totalPage,
+            page:data.page
+        });
+      }
+    });
+  }else{
+    res.redirect('/login.html');
+  }
+})
+
+  
 module.exports = router;

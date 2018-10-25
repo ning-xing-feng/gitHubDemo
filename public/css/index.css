@@ -250,3 +250,48 @@ tbody a{
     outline: none;
     border: 1px solid #000000;  
 }
+
+/* 品牌信息的添加 */
+.insertBrand{
+    width: 500px;
+    position: absolute;
+    right: 300px;
+    bottom: 50px;
+    border: 1px solid #000000;
+    background: #fff;
+    height: 500px;
+    display: none;
+}
+.insertBrand input{
+    height:30px;
+    width: 300px;
+    border: none;
+    border: 1px solid #333;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+.insertBrand h2{
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    margin-top: 50px;
+}
+.insertBrand p{
+    padding-left: 20px;
+}
+.insertBrand .adbtn{
+    width: 100px;
+    margin-left: 80px;
+    background: skyblue;
+    color: #fff;
+    
+}
+.insertBrand .btn{
+    width: 100px;
+    height: 30px;
+    background: skyblue;
+    color: #fff;
+    border: none;
+    outline: none;
+    border: 1px solid #000000;  
+}

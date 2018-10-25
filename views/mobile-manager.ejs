@@ -11,6 +11,7 @@
   <script src="/js/user-manager.js"></script>
 </head>
 <body>
+  
   <div class="index">
     <%- include('./common/header.ejs', { nickname: nickname, isAdmin: isAdmin }) %>
     <div class="container">
@@ -19,8 +20,8 @@
                 <% if(isAdmin){%>
                 <li><a href="/user-manager" >用户管理</a></li>
                 <% }%>
-                <li><a href="/mobile-manager.html" style="color:skyblue" > 手机管理</a></li>
-                <li><a href="##">品牌管理</a></li>
+                <li><a href="/mobile-manager" style="color:skyblue" > 手机管理</a></li>
+                <li><a href="/brand-manager">品牌管理</a></li>
             </ul>
         </div>
       <div class="main">
@@ -56,7 +57,6 @@
            
           </tbody>
         </table>
-        <!-- 实现分页 -->
         <ul class="paging">
             <% if(totalPage==''){ %>
                 <a href="/mobile-manager" class="active" style="color:#000;text-decoration:none;" >查看全部</a>
@@ -142,7 +142,7 @@
      </form>
         </div>
       </div>
-    </div>
+    </div> -->
 </body>
 </html>
 <script>
