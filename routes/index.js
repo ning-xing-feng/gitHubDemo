@@ -92,14 +92,12 @@ router.get('/user-manager',function(req,res){
 
 //手机管理页面
 router.get('/mobile-manager',function(req,res){
-  if(req.cookies.username && parseInt(req.cookies.isAdmin)){
+  if(req.cookies.username ){
     //查询数据库
     //从前端去得两个参数
     let page=req.query.page||1;
     let pageSize=req.query.pageSize||2;
     let search = req.query.search;
-    let userId = req.query.id;
-  
       phoneModel.getPhoneList({
         page:page,
         pageSize:pageSize,
@@ -126,7 +124,7 @@ router.get('/mobile-manager',function(req,res){
 
 
 router.get('/brand-manager',function(req,res){
-  if(req.cookies.username && parseInt(req.cookies.isAdmin)){
+  if(req.cookies.username){
     //查询数据库
     //从前端去得两个参数
     let page=req.query.page||1;

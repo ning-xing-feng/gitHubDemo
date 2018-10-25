@@ -17,7 +17,8 @@
 .container .menu{
     width: 260px;
     height: 100%;
-    background:#ccc;
+    background:#edf7ed;
+    box-shadow:1px 1px 5px #c5c0c0;
 }
 .container .main{
     flex:1;
@@ -99,30 +100,34 @@ tbody a{
     border: none;
     border: 1px solid #ccc;
     padding-left: 5px;
+    border-radius: 10px;
 }
 .main .btn{
     width: 80px;
     height: 42px;
-  
+    border-radius: 10px;
 }
 .main .menuSerch{
     float: right;
     margin:0 30px 30px 0;
 }
-
+.current{
+    background: skyblue;
+    color: azure;
+  }
 /* 实现分页功能 */
 .paging{
 
-    position: absolute;
+    position: fixed;
     bottom: 100px;
     right: 70px;
 }
 .paging li{
     float: left;
     border: 1px solid #ccc;
-    width: 25px;
-    height:20px;
-    line-height: 20px;
+    width: 40px;
+    height:30px;
+    line-height: 30px;
     text-align: center;
     margin-right:1px;
 }
@@ -130,10 +135,10 @@ tbody a{
     color: #000000;
     text-decoration: none;
 }
-.active{
-    background: skyblue;
+/* .active{
+     background: skyblue; 
     color: #fff;
-}
+} */
 
 /* y用户信息的修改 */
 .updataNews{
@@ -163,11 +168,21 @@ tbody a{
 .updataNews p{
     padding-left: 20px;
 }
+.adbtn{
+    outline: none;
+    height: 30px;
+    margin-top: 20px;
+    border: none;
+}
 .updataNews .adbtn{
     width: 100px;
     margin-left: 80px;
     background: skyblue;
     color: #fff;
+    outline: none;
+    height: 30px;
+    margin-top: 20px;
+    border: none;
     
 }
 .updataNews .btn{
@@ -177,7 +192,7 @@ tbody a{
     color: #fff;
     border: none;
     outline: none;
-    border: 1px solid #000000;
+    /* border: 1px solid #000000; */
 
     
 }
@@ -185,7 +200,7 @@ tbody a{
  .addPhone{
     width: 100px;
     height: 40px;
-    border: 1px solid #eee;
+    /* border: 1px solid #000000; */
     float: left;
     margin-right: 50px;
     margin-bottom: 50px;
@@ -194,6 +209,9 @@ tbody a{
     text-align: center;
     margin-left: 40px;
     cursor: pointer;
+    box-shadow:1px 1px 5px #333;
+    font-size: 14px;
+    /* background: skyblue; */
 }
 .username img{
  width: 100px;

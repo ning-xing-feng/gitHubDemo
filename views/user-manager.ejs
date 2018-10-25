@@ -10,6 +10,12 @@
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/js/user-manager.js"></script>
 </head>
+<style>
+   body{
+          background:url("/images/bg.jpg");
+          background-size: 100%;
+        }
+</style>
 <body>
 
   <div class="index">
@@ -18,8 +24,15 @@
 
     <div class="container">
 
-      <%- include('./common/menu.ejs', { isAdmin: isAdmin }) %>
-
+        <div class="menu">
+            <ul class="menuList">
+                <% if(isAdmin){%>
+                <li><a href="/user-manager" style="color:skyblue;">用户管理</a></li>
+                <% }%>
+                <li><a href="/mobile-manager" > 手机管理</a></li>
+                <li><a href="/brand-manager">品牌管理</a></li>
+            </ul>
+        </div>
       <div class="main">
         <div class="menuSerch"> 
           <form action="/user-manager" method="GET">
@@ -140,4 +153,12 @@
   $('.btn').click(function(){
     $('.updataNews').hide();
   })
+
+  $('.paging li a').each(function () {
+    $this = $(this);
+    if ($this[0].href == String(window.location)) {
+      $this.parent().addClass("current");
+    }
+  })
+
 </script>

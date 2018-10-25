@@ -11,7 +11,12 @@
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/js/user-manager.js"></script>
 </head>
-
+<style>
+   body{
+          background:url("/images/bg.jpg");
+          background-size: 100%;
+        }
+</style>
 <body>
   <div class="index">
     <%- include('./common/header.ejs', { nickname: nickname, isAdmin: isAdmin }) %>
@@ -72,7 +77,7 @@
           <h2>新增品牌</h2>
           <p>
             <label>品牌LOGO</label>
-            <input type="file" class="imgSrc" name="src">
+            <input type="file" class="imgSrc" name="src" style="border:none">
           </p>
 
           <p>
@@ -98,7 +103,7 @@
           </p>
           <p>
             <label>品牌LOGO</label>
-            <input type="file" class="imgSrc" name="src">
+            <input type="file" class="imgSrc" name="src" style="border:none">
           </p>
           <p>
             <label>品牌名称：</label>
@@ -129,9 +134,13 @@
 
     $('.pdatePhone').children().find('.brandId').val($(this).parent().parent().find('.brandId').html());
     $('.pdatePhone').children().find('.brandName').val($(this).parent().parent().find('.brandName').html());
-
   })
-
+  $('.paging li a').each(function () {
+    $this = $(this);
+    if ($this[0].href == String(window.location)) {
+      $this.parent().addClass("current");
+    }
+  })
 
 
 </script>
