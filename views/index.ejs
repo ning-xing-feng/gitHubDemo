@@ -6,6 +6,12 @@
   <title>Page Title</title>
   <link rel="stylesheet" type="text/css" href="/css/reset.css" />
   <link rel="stylesheet" href="/css/index.css">
+  <style>
+        body{
+          background:url("/images/bg.jpg");
+          background-size: 100%;
+        }
+  </style>
 </head>
 <body>
   
@@ -15,6 +21,7 @@
         <%- include('./common/menu.ejs',{isAdmin:isAdmin})%>
         <div class="main">
           <p style="font-size:30px;margin-left:30px;">Welcome to here <span style="color:aquamarine"><%= username %></span></p>
+          <img src="/images/pic.gif" style="width:500px;height:300px;margin-left: 100px">
         </div>
       </div>
     </div>

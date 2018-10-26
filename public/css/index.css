@@ -17,7 +17,7 @@
 .container .menu{
     width: 260px;
     height: 100%;
-    background:#edf7ed;
+    /* background:#edf7ed; */
     box-shadow:1px 1px 5px #c5c0c0;
 }
 .container .main{
@@ -313,3 +313,5 @@ tbody a{
     outline: none;
     border: 1px solid #000000;  
 }
+
+

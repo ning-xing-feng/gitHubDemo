@@ -124,6 +124,15 @@ router.post('/update', upload.single('src'), function (req, res) {
 })
 
 
+router.get('/logout',function(req,res){
+  //清楚cookie，跳转页面
+  res.clearCookie('username');
+  res.clearCookie('nickname');
+  res.clearCookie('isAdmin');
+  res.redirect('/login.html');
+  res.send('<script>location.replace("/")</script>');
+})
+
 //访问品牌的数据库
 router.get('/findBrand',function(req,res){
   MongoClient.connect(url,function(err,client){

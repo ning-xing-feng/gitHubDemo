@@ -3,6 +3,8 @@ var router = express.Router();
 
 const usersModel=require('../model/usersModel.js');
 const phoneModel=require('../model/phoneModel.js');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://127.0.0.1:27017';
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -100,5 +102,28 @@ router.post('/login',function(req,res){
     res.clearCookie('isAdmin');
     res.redirect('/login.html');
     res.send('<script>location.replace("/")</script>');
+  })
+
+
+
+  //查找user数据库，拿到所有的用户名和密码，实现登录验证
+  router.get('/findUsers',function(req,res){
+    MongoClient.connect(url,function(err,client){
+      if(err){
+        console.log('数据库连接失败');
+        res.send({code:-1,mag:'数据库查找失败'});
+      }else{
+        var db=client.db('nxf');
+        db.collection('users').find().toArray(function(err,result){
+          if(err){
+            res.send({code:-1,msg:'数据查询失败'});
+          }else{
+            console.log('查询成功');
+            res.send(result);
+          }
+          client.close();
+        })
+      }
+    })
   })
 module.exports = router;
